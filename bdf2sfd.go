@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"image"
 	"image/color"
@@ -12,6 +13,8 @@ import (
 	"strings"
 )
 
+var outputImage = flag.Bool("p", false, "")
+
 const pixel = 64
 const D = 2
 const descent = D * pixel
@@ -19,6 +22,8 @@ const ascent = 12*pixel - descent
 const bitmask = 25
 
 func main() {
+	flag.Parse()
+
 	buf, _ := ioutil.ReadFile("Pixii-12.bdf")
 	lines := strings.Split(string(buf), "\n")
 
@@ -215,7 +220,9 @@ EndSplineFont`)
 
 	f.Close()
 
-	p, _ := os.Create("pixii-plane0.png")
-	png.Encode(p, img)
-	p.Close()
+	if *outputImage {
+		p, _ := os.Create("pixii-plane0.png")
+		png.Encode(p, img)
+		p.Close()
+	}
 }
