@@ -1,0 +1,123 @@
+<Style>
+@font-face {
+  font-family: 'pixii';
+  src: url(Pixii.ttf)  ;
+}
+
+* {
+  font-family: 'pixii' ; 
+  line-height: 1.2;
+}
+
+code {
+    white-space: pre-wrap;
+}
+</Style>
+ 
+<body>
+<p>
+    Lorem ipsum dolor sit amet, gloriatur referrentur cum ne, te primis suscipit his. Nisl dolore animal mei in, brute aperiri intellegat sit et. Usu saepe incorrupte disputando et. Vel ne erat impetus.
+    
+    At aliquip quaestio philosophia cum, ei veri labore quodsi has. Soluta ceteros deterruisset et quo, eu eos tractatos deseruisse. Ut vix veritus delicata. Vocent philosophia eam ad. Nec ex mazim eripuit probatus. Veniam iracundia persecuti est ad.
+    
+    Simul reformidans et nec, esse ancillae eam ei. Vel no possim officiis, qui ea veri partiendo moderatius, has vocibus imperdiet ullamcorper ne. Munere animal facilisis vis eu, vel in mazim facete reprimique, cum ex magna constituam. Odio case aliquid te vis, eruditi definitiones cum at. Vel no inani veritus, no labitur facilis accommodare qui, eirmod offendit vel ei. Ea duo nusquam minimum efficiantur, ferri perfecto in mei.
+    
+    Sed iriure periculis voluptatum ne, eu cum purto vero. Legere sententiae appellantur mei te, qui no stet legere scripserit. His at quando viderer definitiones, vix apeirian similique eu, mel at malis dolorum laboramus. Nam offendit efficiantur at.
+    
+    Id sumo contentiones mel. Illum tacimates interesset an vim, erat augue argumentum vis in. Eos nisl vero epicuri te, et duo vivendum hendrerit temporibus, te eam praesent dissentiet. Constituam efficiantur vix et. Ut mel cibo accusam erroribus, vis doming prodesset incorrupte ex. Vis ex nusquam electram, te amet lucilius usu. In per semper epicurei elaboraret, quem intellegebat nam te.
+</p>
+
+<code>
+        for i < len(lines) {
+            if strings.HasPrefix(lines[i], "STARTCHAR ") {
+                uni, _ := strconv.Atoi(lines[i+1][9:])
+                name := lines[i][10:]
+                i = i + 2
+    
+                w, dw, offy := 0, 0, 0
+    
+                for lines[i] != "BITMAP" {
+                    if strings.HasPrefix(lines[i], "BBX") {
+                        bb := strings.Split(lines[i], " ")
+                        w, _ = strconv.Atoi(bb[1])
+                        dw, _ = strconv.Atoi(bb[3])
+    
+                        h, _ := strconv.Atoi(bb[2])
+                        dh, _ := strconv.Atoi(bb[4])
+    
+                        offy = 12 - D - dh - h
+                    }
+                    i = i + 1
+                }
+    
+                i = i + 1
+                bitmap := [][]byte{}
+                for y := 0; y < offy; y++ {
+                    bitmap = append(bitmap, nil)
+                }
+    
+                for lines[i] != "ENDCHAR" {
+    
+                    bits := make([]byte, 0, 12)
+                    for x := 0; x < dw; x++ {
+                        bits = append(bits, 0)
+                    }
+    
+                    for ii := range lines[i] {
+                        b, _ := strconv.ParseInt(lines[i][ii:ii+1], 16, 64)
+                        for bi := uint64(60); bi < 64; bi++ {
+                            bits = append(bits, byte(uint64(b)<<bi>>63))
+                        }
+                    }
+    
+                    bits = bits[:dw+w]
+                    bitmap = append(bitmap, bits)
+                    i = i + 1
+                }
+    
+                p := &pair{
+                    unicode:  uni,
+                    bitmap:   bitmap,
+                    charname: name}
+    
+                if w+dw <= 6 {
+                    if uni > 0x3000 {
+                        p.width = 12
+                    } else {
+                        p.width = 6
+                    }
+                } else {
+                    p.width = 12
+                }
+                table = append(table, p)
+            } else {
+                i++
+            }
+        }
+</code>
+
+<p>
+    仂猀呧觖陏鸆楥鈺劦圪瓬杈怭穻杈趓乇抯駃鉏。夬悢忥趼枷灟溠筤优伈峇坌昅囷沇溰屮泑毾萺。敓一枵谹寍鉠乜幙噮仈，淂屮洒堄萏鉐乇摎冘夯。仈蚢孢崚殂麡雵搘匟旯宨扷坲炂阨塨乜岨慴滏。堷苃阤膷楱醑癿一傝蚸烒抩夯柀丌，殛堹兀泔籹筰狉阞屮侁禓笁夃帙。爿旂怴裉祋靃葳鄎扙朹奅旲枌怙匉翜丌肸蜞塎。蚺一峛唰雈頍屮碲謔卬，氪丌洐梒跕僋亍綼圠庂。猝一峔庴嵀嗐亍箑鬳冇，淠乇柘逡菡煝亍斠勼夗。揲妵邘彋萿輹艸一蛣厜俴抶刉籹乜，嗝琖兀炘侺艂刱氻屮垀勩壴仂抴。痧苃朿錣腢澫囟一筎淝珜姌尻衶兀，僊喵屮坽紃隗抭丼兀拊榬殶殳旽。惢佷机輷葮嶪伓一揄惙俴姃仨垙屮，煄掱乇芘昡雎枒卌丌洰墋朏夬岨。倕一俅莍軧嵞乜嫬輷亓，笲乇茌涾湝瑒兀禕毌仜。偮一咷聃鄈萻丌榞嶮冇，偈兀咺酖裐傮乇蒤旡氻。埭一侲翑棝遒乇漮錁亓，埜屮姼埻睎嗩屮蓖丱仝。蛦冞邗獬誄篪网一蛓婂涋芺卌衎乜，嗈袲乇岟侲綅泀庀兀侞嫞姷仈怭。仂耾怑涷衲襺摃嵲灱艽砃坅孥姏忭裶丌怌窬蒍。崸矹汒魾溽磥劦一犈啅茦弨犰俙乜，葠跕兀泩茍堽斻仩兀咘瑲秏仈妼。埰一垵捽惲蜍兀稯赮亓，堌乇邾娾跐稢乜蒤丏仨。湹岤网瞚楁憺圪一萐猗郚迕庂玸乇，楑菉乜戔扂瑔芼仡乇泲僪洇丮狜。窙岯奷瘰塏璒孖一粢淩欴泫刉臿丌，稐愘屮怙甮綃弣仩丌枘漃姲尐籵。厹笒垀笴娀鸇僂誄奿朳眈佘宕姁扻睟乇炓褌腯。蛅一陏紶菼碇丌熉諞冇，笸兀姷婍渟綃乜嫫巿氶。萏泂屺澸楑鮐阣一欹荳庨泧汃恲乇，瑄寪乜狘勀睠迕扐屮刵蒟胉殳杹。剬一洇焆婼趌亍耤燀仈，窏丌姠庳菝晸屮滶丱仡。仈凎芘婑砎鷾鉖毷圴伄眊岒怑怮抏畹屮泞毄塏。嵕佫汌磛戣諴汊一稂偠栱怮玊俬乜，筸堿乇弣峸溏斨氻兀抭殞俍夬怮。唪一殶猈揵葾乜漥橝勼，蛂兀峞婞揲僈乇寠冇阞。軜一眊晢睍溗亍罳諿亓，琌屮昴埏喣腄乇朢圠屳。絇一羍翊絒窣兀禊遹卬，笳屮紁琀菑貄兀朢丮庀。夃浺昈孲挕鷽葟輁伄妀哖芐姃盱佖詡屮佶墑蜄。蚽一剄晢嵀煡亍箘燊巿，笥亍秖羝粨裖兀殠勼圢。嵒呣尥螚搎螣奿一揓逤娕朊宁垤亍，窣婸乇侁殶彀迕仚乇呴蓖笀巿玦。莌一苾痑鳦惷乇蒘橏气，梌兀帢桮殽跠兀墘尐刉。媟炔汊艕睩廛朿一揙桹唦狉仡帠亍，幎椋乜弣洉筴昃氶亍沺滫哞爿呾。亓訒拊淩殂鸅廌鄐伢汏迮岒阺甿邧睭屮抾嫠筡。爿窋肮桻俉靃骭鳭弚巟茇吽抮侘庈椿乇佹甃筴。焨狌机橧滁魻妅一崽唼荿歾仩毖屮，葒腊乜弤玸嗋杹帄兀佪廙挏仂抭。巿砱坱庲羾禶瑒鉣刓朾炡汫侉芠玕牏兀坲睯溮。旡疻怢堄砏蠷瓡萻妀朹郅吥呧抴狃椯乇侔綣搎。荾一笁孮椪跧乇鄣嶪爿，偟乇恲晛愔毹丌摿殳尕。
+
+    黑製黨來有長立你所片會人
+    我林陸少學不素種受應經下先東幾從合等買；人我具如雲感下長當真引，雙許人人金落麼：我面當天熱，有時灣未形幾，也的外醫類歡學中可多法，計要改輕我即過。了理用公文夫許便臺收眼低經再這高入、照費設開現小包人對石嗎性自會……以龍見開且優這體獎地只心得刻以性這學作聯題備麼它？來風外時再歡作自雄減、太分他教預品政進們有孩家以？認裡是總望樂媽參個接背場速現不友用臺種青氣有！媽麼不政經現，壓麼地標小愛野開。我分視往場力成統後，唱處著母內備黑那病；靈拉推死信外是國喜小易朋！性牛生應女到國童中停香學結股國建又不，服白用的有出電、後地能去成自自度語了找心命賽熱各了照做角一家的力？然候場，氣同話低那！是導去高不起是認視子要……是必王？
+    
+    的聞四是是通，工我當態灣，球加華的資只以子。
+    
+    有常過了。母可一生低吸機。斯事父我備過會幾斷果月國一？全樣文用終了有南費的後步易標實富以里隨，的為則相請？大包有找人有道名案良李在坡本，想土處一散電上和海感了手事後合北。
+</p>
+
+<p>
+    私も当時単にその赴任帰りというものの時を使うますます。
+    
+    何とも先刻を真似ようはそんなにその任命ならましでもに信ずるからいらっしゃるありには活動ししたが、全くとはあっだろましですた。頭へ生れでし事はどうしても当時がどうもたうない。いったん岡田さんに建設がたそう関係から待っない肴その一口誰か関係がというお注意でですですですと、こうした今はあなたか具合国より云っけれども、嘉納さんの事が欄の私がもちお誘惑と困らて私フォリオにご前後を出かけように今にお修養に伴うですましが、何しろ実に帰着で廻ったば得でのが保つたで。またただお年々歳々をついのはいっそ変というんて、その左にも妨げでしょがという教場をしからなりたです。
+    
+    こういう上金力の以上その主位はそれいっぱいを見たかと槙さんにしならた、学校の事実うに従ってご任命たたですから、権力の末に支に十一月までの主命から晩云っからいるて、たったの結果がしてこの以上でよく出来でしだとしない事うて、怪しいたましがさらに同書物眺めませものますでしある。
+    
+    また幾分か変か納得が存じますて、昔上人に困るばいます時を小矛盾の平生が参りたな。元来をはついにして疑わたたたましが、ぼんやりけっしてするので説明も少々若いないものます。
+    
+    しかもご答弁をしからはならますのですが、状態には、まして私かするから申し上げられないたいうれでしませとなりが、生徒は限らば得るたない。同時に依然としてはもし辞令によって得るんて、それをも前中などここのご教育はなかっしいるだで。私は現に始末の事をお所有も作ってみたですなですて、三三の着物がますます及ぼすですというお話ますが、例えばその主義の素因の困るれるから、それかがどこの理非に注意からなっから下さらんものただと中止出から教育とりいたう。世の中とまた岡田さんにしかしこう倒さだのだたで。
+    
+    槙君はさらに社会がさば立っですのですないな。（ただ赤をありところませますないてなけれは喰わませんて、）すぐあるだ国を、dutyの年々歳々かもしのできという、社会の反抗はたくさんのつどまで消えしものを作っなから関係者あっばいましというお探照灯なのない。何はけっして秩序で云いでようにして行くなくっのたくばつまり当然驚中腰読みですです。
+</p>
+</body>
