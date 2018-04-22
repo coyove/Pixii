@@ -2,6 +2,10 @@ package main
 
 import (
 	"fmt"
+	"image"
+	"image/color"
+	"image/draw"
+	"image/png"
 	"io/ioutil"
 	"os"
 	"strconv"
@@ -149,9 +153,14 @@ BeginChars: 65536 %d
 		}
 	}
 
+	img := image.NewGray(image.Rect(0, 0, 12*256, 12*256))
+	draw.Draw(img, img.Bounds(), image.White, image.ZP, draw.Src)
+
 	for i, p := range table {
 		set := ""
 		bitmap := p.bitmap
+		row := p.unicode / 256
+		col := p.unicode % 256
 
 		for i := 0; i < 12; i++ {
 			if i >= len(bitmap) {
@@ -166,6 +175,8 @@ BeginChars: 65536 %d
 				if b == 0 {
 					continue
 				}
+
+				img.Set(col*12+ix, row*12+i, color.Black)
 
 				x0 := ix * pixel
 				x1 := x0 + pixel
@@ -203,4 +214,8 @@ EndChar
 EndSplineFont`)
 
 	f.Close()
+
+	p, _ := os.Create("pixii-plane0.png")
+	png.Encode(p, img)
+	p.Close()
 }
